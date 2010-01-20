@@ -1,0 +1,6 @@
+# psd MakeFile
+# Amit Kumar, 2010
+# Anand Narayan, 2010
+
+obj-m := proc_psd.o
+

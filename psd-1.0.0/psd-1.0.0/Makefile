@@ -1,0 +1,62 @@
+# psd MakeFile
+# Amit Kumar, 2010
+# Anand Narayan, 2010
+#
+# This make file builds the procfs file /proc/psd/pinfo
+# It also builds the psd user space binary which extracts critical 
+# process information being read in the /proc/psd/pinfo proc file.
+#
+
+# Version specific variables 
+VERSION      := 1
+SUBVERSION   := 0
+MINORVERSION := 0
+TARVERSION   := $(VERSION).$(SUBVERSION).$(MINORVERSION)
+
+# Setting the compiler
+CC:= gcc
+# psd specific directories and files
+KERNELDIR :=/lib/modules/$(shell uname -r)/build
+PSDMODULEDIR := $(shell pwd)/psd-kernel-module
+PSDUSERDIR:= $(shell pwd)/psd-user-program
+PSDMAN:=$(PSDUSERDIR)/psd.1
+
+# variable to hold information about all the files to be packaged into a tar file
+TARFILES:= README COPYING Makefile $(PSDMODULEDIR) $(PSDUSERDIR)
+
+.PHONY: all clean tar
+
+all:
+	
+tar: $(TARFILES)
+	mkdir -p psd-$(TARVERSION)
+	cp -Rf $(TARFILES) psd-$(TARVERSION)
+	tar cf psd-$(TARVERSION).tar psd-$(TARVERSION)
+	gzip -9 psd-$(TARVERSION).tar
+
+clean:
+	rm -Rf *.o $(PSDMODULEDIR)/*.o $(PSDMODULEDIR)/*.ko $(PSDUSERDIR)/*.o \
+	$(PSDMODULEDIR)/*.mod.c $(PSDMODULEDIR)/*.markers $(PSDMODULEDIR)/*.symvers \
+	$(PSDMODULEDIR)/*.order psd-$(TARVERSION) psd-$(TARVERSION).tar.gz psd
+
+module: $(PSDMODULEDIR)/proc_psd.c
+	$(MAKE) -C $(KERNELDIR) M=$(PSDMODULEDIR) modules
+
+module_install: $(PSDMODULEDIR)/proc_psd.ko
+	insmod $(PSDMODULEDIR)/proc_psd.ko
+
+module_remove: 
+	rmmod $(PSDMODULEDIR)/proc_psd.ko
+
+psd.o: $(PSDUSERDIR)/psd.h
+
+psd : $(PSDUSERDIR)/psd.c
+	$(CC) -o $@ $< -lncurses
+
+psd_install:
+	cp -f psd /bin/
+	cp -f $(PSDUSERDIR)/psd.1 /usr/share/man/man1/
+
+psd_remove:
+	rm -f /bin/psd
+	rm -f /usr/share/man/man1/psd.1

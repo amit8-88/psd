@@ -1,0 +1,13 @@
+COMPATIBILITY
+
+This code is intended for use with Linux 2.2.30 and hopefully all future kernels. 
+You should be running a system with libc 6, but libc 5 might work too.
+
+INSTALLATION
+make
+make install
+
+BUG REPORTS
+Report psd bugs to Amit Kumar at amit8.88@gmail.com and Anand Narayan at anand.narayan.mishra@gmail.com with subject "psd-bug".
+
+    

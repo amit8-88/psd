@@ -1,0 +1,43 @@
+.\" 1
+.\" Man page for the psd project
+.\"
+.\" Version 1
+.TH psd 1 "January 20, 2010" "psd" "psd User's Manual"
+.SH NAME
+psd \- display the status of processes in the kernel space.
+
+.SH SYNOPSIS
+\fBpsd\fR 
+.SH NAVIGATION
+.P 
+Press \`a\` keystroke from the keyboard to display the next page on the screen.
+.P
+Press any keystroke from the keyboard to come back to the previous page on the screen.
+
+.SH DESCRIPTION
+\fBpsd\fR lists all the processes running in the kernel space and displays useful information related to the processes. 
+It shows real time process status of the processes. Any new process will add up in the list in real time and will be 
+displayed on the screen.
+ 
+
+.SH FILES
+\fBpsd\fR works by reading the virtual file '/proc/psd/pinfo in the /proc virtual filesystem directory created at the psd install time.
+
+
+
+.SH BUGS
+.P
+Report \fBpsd\fR bugs to amit8.88@gmail.com 
+and anand.narayan.mishra@gmail.com with subject "psd-bug".
+.P
+The \fBpsd\fR project repository: <http://www.github.com/amit8-88/psd> 
+.SH COPYRIGHT
+\fBpsd\fR is a free software released under the License  GPLv3+:  GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. You  are free to change and redistribute it.However, there is NO WARRANTY,and authors are not responsible for any harm done to your system.
+
+
+.SH AUTHOR
+\fBpsd\fR is written by \fBAmit Kumar\fR & \fBAnand Narayan\fR under the guidance of \fBDr. Krishnamurthy Babu\fR & \fBMs. Shanmugapriya B\fR.
+
+.SH SEE ALSO
+.BR ps(1)
+
